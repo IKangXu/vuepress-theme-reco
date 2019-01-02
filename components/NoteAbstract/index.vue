@@ -29,14 +29,20 @@ export default {
   props: ['data', 'currentPage'],
   methods: {
     goTags (tag) {
+      const tagClick = this.$site.themeConfig.tagClick
       this.$emit('currentTag', tag)
-      this.$router.push({path: '/tags/'})
+      if (tagClick == true) {
+        // 目前通过name跳转会报错
+        this.$router.push({path: '/tags', query: { tag }})
+      }
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
+@import '../../styles/config.styl'
+
 .abstract-wrapper
   width 100%
   .abstract-item
@@ -62,7 +68,7 @@ export default {
         height: 2px;
         bottom: 0;
         left: 0;
-        background-color: #3eaf7c;
+        background-color: $accentColor;
         visibility: hidden;
         -webkit-transform: scaleX(0);
         transform: scaleX(0);
